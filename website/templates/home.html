@@ -1,5 +1,31 @@
 {% extends "base.html" %} {% block title %}Home{% endblock %}
-
 {% block content %}
-<h1>This is the Home Page</h1>
+
+<h1 align="center">Goals</h1>
+<ul class="list-group list-group-flush" id="goals">
+    <h3>Your goals:</h3>
+    {% for goal in goals %}
+    <li class="list-group-item">
+        <h4>{{goal[1]}}</h4>
+        {{goal[2]}}
+        <br/><br/>
+        <button class="btn btn-info">Edit</button>
+        <button class="btn btn-danger">Delete</button>
+        <button class="btn btn-secondary">Comments</button>
+    </li>
+    {% endfor %}
+</ul>
+<br/>
+<form method="POST">
+    <h3>Add a new Goal!</h3>
+    <label for="title">Title:</label>
+    <textarea name="title" id="title" placeholder="Goal title" class="form-control"></textarea>
+    <br/>
+    <label for="description">Description:</label>
+    <textarea name="description" id="description" placeholder="Describe your goal" class="form-control"></textarea>
+    <br/>
+    <div align="center">
+        <button type="submit" class="btn btn-primary">Add Goal</button>
+    </div>
+    <br/>
 {% endblock %}

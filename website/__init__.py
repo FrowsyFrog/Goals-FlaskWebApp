@@ -2,6 +2,7 @@ from flask import Flask
 from flask_login import LoginManager
 import requests
 
+url = 'http://44.195.223.194:8000/'
 url2 = 'http://3.214.121.253:8000/'
 
 def create_app():
@@ -11,7 +12,6 @@ def create_app():
     login_manager = LoginManager()
     login_manager.login_view = 'auth.login'
     login_manager.init_app(app)
-
 
     from .views import views
     from .auth import auth
@@ -26,7 +26,6 @@ def create_app():
         response = requests.get(f'{url2}userid/{id}')
         if response.status_code == 200:
             response_data = response.json()
-            print(response_data[0])
             if response_data:
                 return User(data=response_data[0])
         return
