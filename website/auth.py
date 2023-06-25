@@ -5,7 +5,7 @@ from .models import User
 
 auth = Blueprint('auth', __name__)
 url = 'http://44.195.223.194:8000/'
-url2 = 'http://54.86.81.216:8000/'
+url2 = 'http://3.214.121.253:8000/'
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
@@ -21,14 +21,9 @@ def login():
             flash('Logged in succesfully!', category='success')
             response_data = response.json()
             if response_data:
-                data = {
-                    'id': 0,
-                    'name': response_data[0][0],
-                    'lastname': response_data[0][1],
-                    'email': email,
-                    'password_hash': password
-                }
-                login_user(User(data), remember=False)
+                print("caca!")
+                print(response_data[0])
+                login_user(User(response_data[0]), remember=True)
                 return redirect(url_for('views.home'))
         flash("Incorrect email or password, try again.", category='error')
 
@@ -49,17 +44,24 @@ def sign_up():
         password = request.form.get('password')
 
         data = {
-            'name': name,
-            'lastname': lastname,
-            'email': email,
-            'password_hash': password
+            name,
+            lastname,
+            email,
+            password
         }
         response = requests.post(f'{url}users', data=data)
         if response.status_code == 200:
             registeredUser = response.json()
             # Ver como Juan está devolviendo la id al hacer post...
-            user_id = registeredUser['id']
-            login_user(User(user_id, data), remember=True)
+            data = {
+                registeredUser['id'],
+                name,
+                lastname,
+                email,
+                password
+            }
+
+            login_user(User(data), remember=True)
             flash('Account created!', category='success')
             return redirect(url_for('views.home'))
         else:

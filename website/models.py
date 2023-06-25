@@ -2,15 +2,8 @@ from flask_login import UserMixin
 
 class User(UserMixin):
     def __init__(self, data):
-        self.id = data['id']
-        self.name = data['name']
-        self.lastname = data['lastname']
-        self.email = data['email']
-        self.password = data['password']
-
-    def __init__(self, id, data):
-        self.id = id
-        self.name = data['name']
-        self.lastname = data['lastname']
-        self.email = data['email']
-        self.password = data['password']
+        self.id = data[0]
+        self.name = data[1]
+        self.lastname = data[2]
+        self.email = data[3]
+        self.password = data[4]

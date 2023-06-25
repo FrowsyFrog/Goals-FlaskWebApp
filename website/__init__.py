@@ -2,7 +2,7 @@ from flask import Flask
 from flask_login import LoginManager
 import requests
 
-url2 = 'http://54.86.81.216:8000/'
+url2 = 'http://3.214.121.253:8000/'
 
 def create_app():
     app = Flask(__name__)
@@ -23,11 +23,12 @@ def create_app():
 
     @login_manager.user_loader
     def load_user(id):
-        response = requests.get(f'{url2}user', data=id)
+        response = requests.get(f'{url2}userid/{id}')
         if response.status_code == 200:
             response_data = response.json()
+            print(response_data[0])
             if response_data:
-                return User(response_data)
+                return User(data=response_data[0])
         return
 
     return app
