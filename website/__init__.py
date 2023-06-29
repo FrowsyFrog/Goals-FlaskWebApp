@@ -2,7 +2,8 @@ from flask import Flask
 from flask_login import LoginManager
 import requests
 
-url = 'http://44.195.223.194:8000/'
+# url = 'http://44.195.223.194:8000/'
+url = 'http://3.214.121.253:8005/'
 url2 = 'http://3.214.121.253:8000/'
 
 def create_app():

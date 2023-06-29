@@ -25,6 +25,8 @@ def home():
         else:
             flash("Error: Goal not added, try again.", category='error')
 
+        return redirect(url_for('views.home'))
+
     goals = []
     response = requests.get(f'{url}user/{current_user.id}')
     if response.status_code == 200:
@@ -78,21 +80,23 @@ def comments(goal_id):
     goal = response.json()
     print(goal)
     if request.method == 'POST':
-        user_id = current_user.id
         content = request.form.get('content')
-        data ={
-            "content": content,
-            "user_id": user_id,
-            "goal_id": goal_id
+        user_id = current_user.id
+        data = {
+            "content":content,
+            "user_id":user_id,
+            "goal_id":goal_id
         }
         print(data)
-        print(f'{url2}comment/')        
-        response = requests.post(f'{url2}comment/', data=data)
+        print(f'{url2}comment')        
+        response = requests.post(f'{url2}comment', data=data)
         if response.status_code == 200:
             flash('Comment added successfully!', category='success')
             response_data = response.json()
         else:
             flash("Failed to add comment.", category='error')
+    
+        return redirect(url_for('views.comments', goal_id=goal_id))
 
     comments = []
     response = requests.get(f'{url2}comments/{goal_id}')
@@ -106,19 +110,19 @@ def comments(goal_id):
 @views.route('/comment/edit/<int:comment_id>', methods=['GET', 'POST'])
 @login_required
 def edit_comment(comment_id):
-    response = requests.get(f'{url2}comment/',data={"comment_id":comment_id})
+    response = requests.get(f'{url2}comment',data={"comment_id":comment_id})
     comment = response.json()
     print(comment)
 
     if request.method == 'POST':
         content = request.form.get('content')
         data = {
-            "comment_id": comment_id,
-            "content": content
+            "content": content,
+            "comment_id": comment_id
         }
         print(data)
         print(f'{url2}comment/')        
-        response = requests.put(f'{url2}comment/', data=data)
+        response = requests.put(f'{url2}comment', data=data)
         if response.status_code == 200:
             flash('Comment updated successfully.', category='success')
         else:
@@ -130,7 +134,7 @@ def edit_comment(comment_id):
 @views.route('/comment/delete/<int:comment_id>', methods=['POST'])
 @login_required
 def delete_comment(comment_id):
-    response = requests.delete(f'{url2}comment/', data={"comment_id": comment_id})
+    response = requests.delete(f'{url2}comment', data={"comment_id": comment_id})
     if response.status_code == 200:
         flash('Comment deleted succesfully!', category='success')
     else:
