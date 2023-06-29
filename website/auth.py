@@ -41,26 +41,15 @@ def sign_up():
         password = request.form.get('password')
 
         data = {
-            name,
-            lastname,
-            email,
-            password
+            'name':name,
+            'lastname':lastname,
+            'email':email,
+            'password_hash':password
         }
         response = requests.post(f'{url}users', data=data)
         if response.status_code == 200:
-            registeredUser = response.json()
-            # Ver como Juan está devolviendo la id al hacer post...
-            data = {
-                registeredUser['id'],
-                name,
-                lastname,
-                email,
-                password
-            }
-
-            login_user(User(data), remember=True)
-            flash('Account created!', category='success')
-            return redirect(url_for('views.home'))
+            flash('Account created, enter now!', category='success')
+            return redirect(url_for('auth.login'))
         else:
             flash("Failed to add user.", category='error')
             
