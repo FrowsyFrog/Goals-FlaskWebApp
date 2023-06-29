@@ -9,9 +9,15 @@
         <h4>{{goal[1]}}</h4>
         {{goal[2]}}
         <br/><br/>
-        <button class="btn btn-info">Edit</button>
-        <button class="btn btn-danger">Delete</button>
-        <button class="btn btn-secondary">Comments</button>
+        <a href="{{ url_for('views.edit', goal_id=goal[0]) }}">
+            <button class="btn btn-info">Edit</button>
+        </a>
+        <form method="post" style="display:inline-block" action="{{ url_for('views.delete', goal_id=goal[0])}}">
+            <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
+        </form>
+        <a href="{{ url_for('views.comments', goal_id=goal[0]) }}">
+            <button class="btn btn-secondary">Comments</button>
+        </a>
     </li>
     {% endfor %}
 </ul>

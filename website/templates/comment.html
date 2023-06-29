@@ -1,0 +1,17 @@
+{% extends "base.html" %} {% block title %}Home{% endblock %}
+{% block content %}
+
+{% for c in comment %}
+<form method="POST">
+    <h1 align="center">Editar comentario</h1>
+    <label for="content">Content:</label>
+    <textarea name="content" id="content" placeholder="{{c[1]}}" class="form-control"></textarea>
+    <br/>
+    <div align="center">
+        <button type="submit" class="btn btn-primary">Finish</button>
+    </div>
+    <br/>
+</form>
+{% endfor %}
+
+{% endblock %}
